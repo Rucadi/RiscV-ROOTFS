@@ -2,8 +2,6 @@ ARCH := riscv
 CROSS_COMPILE := riscv64-linux-gnu-
 
 
-configure_linux:
-	make -C linux ARCH=riscv CROSS_COMPILE=$(CROSS_COMPILE) menuconfig
 
 rootfs.cpio.gz: rootfs configure_packages shared_mem_program
 	cd rootfs &&  find . -print0 | cpio --null -ov --owner +0:+0 --format=newc > ../rootfs_only.cpio 
@@ -13,6 +11,11 @@ rootfs.cpio.gz: rootfs configure_packages shared_mem_program
 	mv rootfs.cpio.gz 
 
 
+configure_linux:
+	make -C linux ARCH=riscv CROSS_COMPILE=$(CROSS_COMPILE) menuconfig
+
+linux/arch/riscv/boot/Image.gz:
+	make -C linux ARCH=riscv CROSS_COMPILE=$(CROSS_COMPILE) -j
 
 
 configure_packages: rootfs 
@@ -35,7 +38,8 @@ rootfs:
 	cp kernel_drivers/interrupts_from_host.ko rootfs/root/interrupts_from_host.ko
 
 
-generate_fit:
+generate_fit: linux/arch/riscv/boot/Image.gz
+	cp linux/arch/riscv/boot/Image.gz img_gen/kernel_img
 	make -C img_gen 
 
 clean:
