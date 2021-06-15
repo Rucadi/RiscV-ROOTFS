@@ -2,6 +2,9 @@ ARCH := riscv
 CROSS_COMPILE := riscv64-linux-gnu-
 
 
+configure_linux:
+	make -C linux ARCH=riscv CROSS_COMPILE=$(CROSS_COMPILE) menuconfig
+
 rootfs.cpio.gz: rootfs configure_packages shared_mem_program
 	cd rootfs &&  find . -print0 | cpio --null -ov --owner +0:+0 --format=newc > ../rootfs_only.cpio 
 	cat blobs/blob.cpio rootfs_only.cpio > rootfs.cpio
