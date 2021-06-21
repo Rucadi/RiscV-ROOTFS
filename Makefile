@@ -21,8 +21,8 @@ linux/arch/riscv/boot/Image.gz:
 
 configure_packages: rootfs 
 	cp `which qemu-riscv64-static` rootfs/bin/
-	sudo update-binfmts --import /tmp/qemu-riscv64
-	chroot $(realpath rootfs) qemu-riscv64-static /bin/bash gen.sh
+	sudo update-binfmts --import blobs/qemu-riscv64
+	sudo chroot $(realpath rootfs) qemu-riscv64-static /bin/bash /gen.sh
 
 
 shared_mem_program:
