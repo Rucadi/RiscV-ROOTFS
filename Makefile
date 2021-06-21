@@ -48,4 +48,7 @@ generate_fit: linux/arch/riscv/boot/Image.gz img_gen/rootfs/rootfs.cpio.gz
 
 clean:
 	rm -rf rootfs
+	rm -rf img_gen/device-tree
+	rm -rf img_gen/kernel_img
+	rm -rf img_gen/rootfs
 	make -C linux ARCH=riscv CROSS_COMPILE=$(CROSS_COMPILE) clean
