@@ -15,6 +15,7 @@ configure_linux:
 	make -C linux ARCH=riscv CROSS_COMPILE=$(CROSS_COMPILE) menuconfig
 
 linux/arch/riscv/boot/Image.gz:
+	cp -R -u -p linux.config linux/.config
 	make -C linux ARCH=riscv CROSS_COMPILE=$(CROSS_COMPILE) -j
 
 
@@ -37,8 +38,13 @@ rootfs:
 	cp kernel_drivers/interrupts_from_host.ko rootfs/root/interrupts_from_host.ko
 
 
-generate_fit: linux/arch/riscv/boot/Image.gz
-	cp linux/arch/riscv/boot/Image.gz img_gen/kernel_img
+img_gen/rootfs/rootfs.cpio.gz: rootfs.cpio.gz
+	mkdir -p img_gen/rootfs/
+	cp rootfs.cpio.gz img_gen/rootfs/
+
+generate_fit: linux/arch/riscv/boot/Image.gz img_gen/rootfs/rootfs.cpio.gz
+	mkdir -p img_gen/kernel_img/
+	cp linux/arch/riscv/boot/Image.gz img_gen/kernel_img/
 	make -C img_gen 
 
 clean:
