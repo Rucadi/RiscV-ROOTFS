@@ -48,3 +48,4 @@ generate_fit: linux/arch/riscv/boot/Image.gz img_gen/rootfs/rootfs.cpio.gz
 
 clean:
 	rm -rf rootfs
+	make -C linux ARCH=riscv CROSS_COMPILE=$(CROSS_COMPILE) clean
