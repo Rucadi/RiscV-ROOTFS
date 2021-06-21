@@ -8,7 +8,6 @@ rootfs.cpio.gz: rootfs configure_packages shared_mem_program
 	cat blobs/blob.cpio rootfs_only.cpio > rootfs.cpio
 	rm rootfs_only.cpio
 	gzip -f rootfs.cpio
-	mv rootfs.cpio.gz 
 
 
 configure_linux:
@@ -21,8 +20,8 @@ linux/arch/riscv/boot/Image.gz:
 
 configure_packages: rootfs 
 	cp `which qemu-riscv64-static` rootfs/bin/
-	sudo update-binfmts --import blobs/qemu-riscv64
-	sudo chroot $(realpath rootfs) qemu-riscv64-static /bin/bash /gen.sh
+	update-binfmts --import blobs/qemu-riscv64
+	PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin chroot $(realpath rootfs) qemu-riscv64-static /bin/bash /gen.sh
 
 
 shared_mem_program:
