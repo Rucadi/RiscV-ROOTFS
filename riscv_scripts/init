@@ -6,30 +6,9 @@ mount -t proc none /proc
 mount -t sysfs none /sys
 mount -t devtmpfs none /dev
 
-cat <<!
 
-
-Boot took $(cut -d' ' -f1 /proc/uptime) seconds
-
-___  ___ _____ ___________  ______ ___________ _____  ___   _   _ 
-|  \/  ||  ___|  ___| ___ \ |  _  \  ___| ___ \_   _|/ _ \ | \ | |
-| .  . || |__ | |__ | |_/ / | | | | |__ | |_/ / | | / /_\ \|  \| |
-| |\/| ||  __||  __||  __/  | | | |  __|| ___ \ | | |  _  || . ` |
-| |  | || |___| |___| |     | |/ /| |___| |_/ /_| |_| | | || |\  |
-\_|  |_/\____/\____/\_|     |___/ \____/\____/ \___/\_| |_/\_| \_/
-                                                                      
-
-Welcome to RISCV_MEEP
-
-
-!
 export PATH=$PATH:/usr/local/sbin/
 export PATH=$PATH:/sbin
 export PATH=$PATH:/usr/sbin/
 
 exec /bin/bash
-
-#export DEBIAN_FRONTEND=noninteractive
-#export RUNLEVEL=1
-
-#dpkg --configure -a

@@ -19,7 +19,7 @@ linux/arch/riscv/boot/Image.gz:
 
 
 configure_packages: rootfs 
-	cp `which qemu-riscv64-static` rootfs/bin/
+	cp `which qemu-riscv64-static` rootfs/usr/bin/
 	update-binfmts --import blobs/qemu-riscv64
 	PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin chroot $(realpath rootfs) qemu-riscv64-static /bin/bash /gen.sh
 
